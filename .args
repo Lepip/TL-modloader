@@ -1,0 +1,9 @@
+tl_path="C:\Games\TL"
+
+tl_args_path="{tl_path}\tl.args"
+tl_properties_path="{tl_path}\tl.properties"
+versions_path="{tl_path}\game\versions"
+exe_path="{tl_path}\TL.exe"
+
+mods_path="{tl_path}\game\mods"
+modpacks_path="{tl_path}\game\modpacks"
