@@ -3,6 +3,7 @@ import configparser
 import logging
 import os
 from src.utils.consts import NAME
+log = logging.getLogger(__name__)
 
 CONFIG_FILE = 'src/cleanup/window_config.ini'
 
@@ -19,17 +20,17 @@ def save_window_position(window_position):
     config['WINDOW'] = window_position
     with open(CONFIG_FILE, 'w') as configfile:
         config.write(configfile)
-    logging.info(f"Window position saved: {list(config['WINDOW'].items())}")
+    log.info(f"Window position saved: {list(config['WINDOW'].items())}")
 
 def load_window_position():
     if not os.path.exists(CONFIG_FILE):
-        logging.warning(f"Config file {CONFIG_FILE} does not exist.")
+        log.warning(f"Config file {CONFIG_FILE} does not exist.")
         return None
 
     config = configparser.ConfigParser()
     config.read(CONFIG_FILE)
     if 'WINDOW' in config:
-        logging.info(f"Window position loaded: {list(config['WINDOW'].items())}")
+        log.info(f"Window position loaded: {list(config['WINDOW'].items())}")
         return {
             'left': config.getint('WINDOW', 'left'),
             'top': config.getint('WINDOW', 'top'),

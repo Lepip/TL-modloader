@@ -1,6 +1,7 @@
 import os
 import shutil
 import logging
+log = logging.getLogger(__name__)
 
 class ModManager:
     @classmethod
@@ -14,7 +15,7 @@ class ModManager:
                     elif os.path.isdir(file_path):
                         shutil.rmtree(file_path)
                 except Exception as e:
-                    logging.error(f'Failed to delete {file_path}. Reason: {e}')
+                    log.error(f'Failed to delete {file_path}. Reason: {e}')
         else:
             os.makedirs(target_folder)
 
@@ -23,9 +24,9 @@ class ModManager:
                 src_file = os.path.join(source_folder, filename)
                 dst_file = os.path.join(target_folder, filename)
                 if os.path.isfile(src_file):
-                    logging.info(f'Loaded mod {filename} to {dst_file}')
+                    log.info(f'Loaded mod {filename} to {dst_file}')
                     shutil.copy2(src_file, dst_file)
                 else:
-                    logging.error(f'Source file {src_file} is not a file.')
+                    log.error(f'Source file {src_file} is not a file.')
         else:
-            logging.error(f'Source folder {source_folder} does not exist.')
+            log.error(f'Source folder {source_folder} does not exist.')

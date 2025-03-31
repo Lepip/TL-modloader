@@ -1,17 +1,17 @@
 from src.cleanup.window_manager import get_window_position, save_window_position
-import pygetwindow as gw
 import logging
 from src.utils.consts import NAME
-
+log = logging.getLogger(__name__)
 
 def cleanup(root):
-    windows = gw.getWindowsWithTitle(NAME)
-    if not windows:
-        logging.warning(f"No windows found named {NAME}.")
-        return
-    window_position = get_window_position(windows[0])
+    window_position = {
+        'left': root.winfo_x(),
+        'top': root.winfo_y(),
+        'width': root.winfo_width(),
+        'height': root.winfo_height()
+    }
     save_window_position(window_position)
-    logging.info("Window position saved.")
+    log.info("Window position saved.")
 
 def close_window(root):
     cleanup(root)

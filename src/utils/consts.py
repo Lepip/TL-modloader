@@ -1,4 +1,5 @@
 import logging
+log = logging.getLogger(__name__)
 
 NAME="LMC Launcher"
 VERSION="0.0.2"
@@ -8,7 +9,7 @@ class Args:
 
     @classmethod
     def read(self):
-        logging.info("Reading arguments")
+        log.info("Reading arguments")
         args = {}
         try:
             with open(".args", 'r') as file:
@@ -21,11 +22,11 @@ class Args:
                     try:
                         args[key] = value.format(**args)
                     except KeyError as e:
-                        logging.error(f"Missing placeholder in configuration: {e}")
+                        log.error(f"Missing placeholder in configuration: {e}")
         except FileNotFoundError:
-            logging.error(f"The file {self.file_path} does not exist.")
+            log.error(f"The file {self.file_path} does not exist.")
         except Exception as e:
-            logging.error(f"An error occurred: {e}")
+            log.error(f"An error occurred: {e}")
         self._args = args
     
     @classmethod

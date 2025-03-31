@@ -10,12 +10,12 @@ logging.basicConfig(
     filename='app.log',
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    filemode='w',
-    force=True
+    filemode='w'
 )
+log = logging.getLogger(__name__)
 
 def main():
-    logging.info(f"Starting!")
+    log.info(f"Starting!")
     root = tk.Tk()
     configure_window(root)
     root.protocol("WM_DELETE_WINDOW", lambda: close_window(root))
@@ -30,7 +30,7 @@ def main():
     launch_button.pack(pady=10)
 
     root.mainloop()
-    logging.info("Launcher window closed.")
+    log.info("Launcher window closed.")
 
 if __name__ == "__main__":
     main()

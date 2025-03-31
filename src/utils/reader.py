@@ -1,4 +1,5 @@
 import logging
+log = logging.getLogger(__name__)
 
 class FileManager:
     def __init__(self, file_path):
@@ -26,10 +27,10 @@ class PropManager(FileManager):
                         key, value = line.strip().split('=', 1)
                         properties[key] = value
         except FileNotFoundError:
-            logging.error(f"The file {self.file_path} does not exist.")
+            log.error(f"The file {self.file_path} does not exist.")
             return {}
         except Exception as e:
-            logging.error(f"An error occurred: {e}")
+            log.error(f"An error occurred: {e}")
             return {}
         return properties
     
@@ -41,7 +42,7 @@ class PropManager(FileManager):
                 for key, value in properties.items():
                     file.write(f'{key}={value}\n')
         except Exception as e:
-            logging.error(f"An error occurred: {e}")
+            log.error(f"An error occurred: {e}")
     
     def set(self, key, value, is_write=True):
         self.properties[key] = value
@@ -71,10 +72,10 @@ class ArgsManager(FileManager):
                 if key is not None:
                     properties[key] = ''
         except FileNotFoundError:
-            logging.error(f"The file {self.file_path} does not exist.")
+            log.error(f"The file {self.file_path} does not exist.")
             return {}
         except Exception as e:
-            logging.error(f"An error occurred: {e}")
+            log.error(f"An error occurred: {e}")
             return {}
         return properties
 
@@ -82,18 +83,18 @@ class ArgsManager(FileManager):
         if properties is None:
             properties = self.properties
         try:
-            logging.debug(f"Writing to {self.file_path}")
+            log.debug(f"Writing to {self.file_path}")
             with open(self.file_path, 'w') as file:
                 for key, value in properties.items():
                     file.write(f'--{key}\n')
                     file.write(f'{value}\n' if value else '\n')
         except Exception as e:
-            logging.error(f"An error occurred: {e}")
+            log.error(f"An error occurred: {e}")
 
     def set(self, key, value, is_write=True):
-        logging.debug(f"Setting {key} to {value}")
+        log.debug(f"Setting {key} to {value}")
         self.properties[key] = value
-        logging.debug(f"Properties after setting: {self.properties}")
+        log.debug(f"Properties after setting: {self.properties}")
         if is_write:
             self.write()
     
