@@ -3,9 +3,11 @@ import configparser
 import logging
 import os
 from src.utils.consts import NAME, Args
+from src.utils.open_file import resource_path
+
 log = logging.getLogger(__name__)
 
-CONFIG_FILE = 'src/cleanup/window_config.ini'
+CONFIG_FILE = resource_path('src\\cleanup\\window_config.ini')
 
 def get_window_position(window):
     return {

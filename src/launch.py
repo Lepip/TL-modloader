@@ -7,6 +7,7 @@ from src.utils.consts import Args
 from src.settings import SettingsEditor
 from src.utils.modloader import ModManager
 from src.cleanup.closing import close_window
+from src.utils.open_file import resource_path
 log = logging.getLogger(__name__)
 
 def restore(delay):
@@ -29,7 +30,7 @@ def launch_game(root, version_var):
     ModManager.load_mods(modpack_folder, mods_folder)
 
     exe_path = Args.get("exe_path")
-    subprocess.Popen(exe_path)
+    subprocess.Popen(resource_path(exe_path))
     log.info(f"Game launched with executable: {exe_path}")
 
     delay = 30

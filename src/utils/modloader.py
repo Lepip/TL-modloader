@@ -1,11 +1,14 @@
 import os
 import shutil
 import logging
+from src.utils.open_file import resource_path
 log = logging.getLogger(__name__)
 
 class ModManager:
     @classmethod
     def load_mods(self, source_folder, target_folder):
+        source_folder = resource_path(source_folder)
+        target_folder = resource_path(target_folder)
         if os.path.exists(target_folder):
             for filename in os.listdir(target_folder):
                 file_path = os.path.join(target_folder, filename)

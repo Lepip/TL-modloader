@@ -1,8 +1,12 @@
 import logging
+from src.utils.open_file import resource_path
+
 log = logging.getLogger(__name__)
 
 NAME="LMC Launcher"
 VERSION="0.0.2"
+
+ARGS_PATH = ".args"
 
 class Args:
     _args = {}
@@ -14,7 +18,7 @@ class Args:
         args = {}
         write_args = {}
         try:
-            with open(".args", 'r') as file:
+            with open(ARGS_PATH, 'r') as file:
                 for line in file:
                     if '=' in line:
                         key, value = line.strip().split('=', 1)
@@ -27,7 +31,7 @@ class Args:
                     except KeyError as e:
                         log.error(f"Missing placeholder in configuration: {e}")
         except FileNotFoundError:
-            log.error(f"The file {self.file_path} does not exist.")
+            log.error(f"The file .args does not exist.")
         except Exception as e:
             log.error(f"An error occurred: {e}")
         self._args = args
@@ -44,7 +48,7 @@ class Args:
 
     @classmethod
     def save(self):
-        with open(".args", 'w') as file:
+        with open(ARGS_PATH, 'w') as file:
             for key, value in self._write_args.items():
                 file.write(value)
 Args.read()
