@@ -7,10 +7,11 @@ from src.versions import populate_versions
 import logging
 
 logging.basicConfig(
-    filename='app2.log',
+    filename='app.log',
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    filemode='w'
+    filemode='w',
+    force=True
 )
 
 def main():
