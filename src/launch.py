@@ -2,6 +2,7 @@ import logging
 import subprocess
 import threading
 import time
+import os
 from src.utils.consts import Args
 from src.settings import SettingsEditor
 from src.utils.modloader import ModManager
@@ -36,3 +37,11 @@ def launch_game(root, version_var):
     revert_thread.start()
 
     close_window(root)
+
+def open_mods_folder(version_var):
+    version_var = version_var.get()
+    log.info(f"Opening mods folder for version: {version_var}")
+    modpack_folder = Args.get("modpacks_path") + "\\" + version_var
+    if not os.path.exists(modpack_folder):
+        os.makedirs(modpack_folder)
+    os.startfile(modpack_folder)

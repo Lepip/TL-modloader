@@ -1,6 +1,6 @@
 from src.cleanup.window_manager import get_window_position, save_window_position
 import logging
-from src.utils.consts import NAME
+from src.utils.consts import NAME, Args
 log = logging.getLogger(__name__)
 
 def cleanup(root):
@@ -11,6 +11,7 @@ def cleanup(root):
         'height': root.winfo_height()
     }
     save_window_position(window_position)
+    Args.save()
     log.info("Window position saved.")
 
 def close_window(root):

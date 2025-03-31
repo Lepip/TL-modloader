@@ -2,7 +2,7 @@
 import configparser
 import logging
 import os
-from src.utils.consts import NAME
+from src.utils.consts import NAME, Args
 log = logging.getLogger(__name__)
 
 CONFIG_FILE = 'src/cleanup/window_config.ini'
@@ -42,6 +42,10 @@ def load_window_position():
 def configure_window(root):
     root.title(NAME)
     root.geometry("400x200")
+    fixed_window_size = Args.get('fixed_window_size')
     window_position = load_window_position()
     if window_position:
         root.geometry(f"{window_position['width']}x{window_position['height']}+{window_position['left']}+{window_position['top']}")
+    if fixed_window_size:
+        root.resizable(False, False)
+        root.geometry(fixed_window_size)

@@ -6,11 +6,13 @@ VERSION="0.0.2"
 
 class Args:
     _args = {}
+    _write_args = {}
 
     @classmethod
     def read(self):
         log.info("Reading arguments")
         args = {}
+        write_args = {}
         try:
             with open(".args", 'r') as file:
                 for line in file:
@@ -18,6 +20,7 @@ class Args:
                         key, value = line.strip().split('=', 1)
                         value = value.strip('"')
                         args[key] = value
+                        write_args[key] = line
                 for key, value in args.items():
                     try:
                         args[key] = value.format(**args)
@@ -28,9 +31,20 @@ class Args:
         except Exception as e:
             log.error(f"An error occurred: {e}")
         self._args = args
+        self._write_args = write_args
     
     @classmethod
     def get(self, key):
         return self._args.get(key, None)
+    
+    @classmethod
+    def set(self, key, value):
+        self._args[key] = value
+        self._write_args[key] = f"{key}={value}\n"
 
+    @classmethod
+    def save(self):
+        with open(".args", 'w') as file:
+            for key, value in self._write_args.items():
+                file.write(value)
 Args.read()
