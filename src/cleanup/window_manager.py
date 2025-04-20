@@ -51,3 +51,18 @@ def configure_window(root):
     if fixed_window_size:
         root.resizable(False, False)
         root.geometry(fixed_window_size)
+
+def configure_settings_window(settings_window, root):
+    settings_window.title("Settings")
+    settings_window.resizable(False, False)
+    root_x = root.winfo_x()
+    root_y = root.winfo_y()
+    root_width = root.winfo_width()
+    root_height = root.winfo_height()
+    settings_width = 300
+    settings_height = 200
+    settings_x = root_x + (root_width // 2) - (settings_width // 2)
+    settings_y = root_y + (root_height // 2) - (settings_height // 2)
+    settings_window.geometry(f"{settings_width}x{settings_height}+{settings_x}+{settings_y}")
+    settings_window.transient(root)
+

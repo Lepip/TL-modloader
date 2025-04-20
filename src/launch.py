@@ -16,7 +16,7 @@ def restore(delay):
     log.info("Reverting settings after delay.")
     SettingsEditor.restore()
 
-def launch_game(root, version_var):
+def launch_game(version_var):
     version_var = version_var.get()
     log.info(f"Launching...")
     SettingsEditor.set_version(version_var)
@@ -36,8 +36,6 @@ def launch_game(root, version_var):
     delay = 30
     revert_thread = threading.Thread(target=restore, args=(delay,))
     revert_thread.start()
-
-    close_window(root)
 
 def open_mods_folder(version_var):
     version_var = version_var.get()

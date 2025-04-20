@@ -6,5 +6,6 @@ exe_path="{tl_path}\TL.exe"
 mods_path="{tl_path}\game\mods"
 modpacks_path="{tl_path}\game\modpacks"
 fixed_window_size="712x620"
-version=1.21.4
+version=Fabric 1.21.5
 background_blur_radius=10
+close_on_start=1

@@ -38,8 +38,8 @@ class Args:
         self._write_args = write_args
     
     @classmethod
-    def get(self, key):
-        return self._args.get(key, None)
+    def get(self, key, default=None):
+        return self._args.get(key, default)
     
     @classmethod
     def set(self, key, value):
