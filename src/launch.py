@@ -24,10 +24,7 @@ def launch_game(version_var):
     SettingsEditor.modify_settings()
     log.info("Settings modified for game launch")
 
-    modpack_folder = Args.get("modpacks_path") + "\\" + version_var
-    mods_folder = Args.get("mods_path")
-    log.info(f"Loading mods from: {modpack_folder} to {mods_folder}")
-    ModManager.load_mods(modpack_folder, mods_folder)
+    ModManager.load_mods(version_var)
 
     exe_path = Args.get("exe_path")
     subprocess.Popen(resource_path(exe_path))

@@ -10,9 +10,8 @@ def populate_versions():
     files = [f for f in os.listdir(versions_path)]
     return files
 
-def update_version(version_var):
-    selected_version = version_var.get()
-    Args.set("version", selected_version)
+def update_version(version):
+    Args.set("version", version)
 
 def get_version_number(version):
     versions_path = Args.get("versions_path")

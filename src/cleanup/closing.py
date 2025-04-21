@@ -1,4 +1,4 @@
-from src.cleanup.window_manager import get_window_position, save_window_position
+from src.windows.window_manager import save_window_position
 import logging
 from src.utils.consts import NAME, Args
 log = logging.getLogger(__name__)

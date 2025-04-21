@@ -4,10 +4,12 @@ import logging
 import os
 from src.utils.consts import NAME, Args
 from src.utils.open_file import resource_path
+from src.utils.media import load_cropped_background
+import tkinter as tk
 
 log = logging.getLogger(__name__)
 
-CONFIG_FILE = resource_path('src\\cleanup\\window_config.ini')
+CONFIG_FILE = resource_path('src\\windows\\window_config.ini')
 
 def get_window_position(window):
     return {
@@ -48,9 +50,17 @@ def configure_window(root):
     window_position = load_window_position()
     if window_position:
         root.geometry(f"{window_position['width']}x{window_position['height']}+{window_position['left']}+{window_position['top']}")
+        width = window_position['width']
+        height = window_position['height']
     if fixed_window_size:
         root.resizable(False, False)
         root.geometry(fixed_window_size)
+        width, height = map(int, fixed_window_size.split('x'))
+    
+    blurred_image = load_cropped_background("media\\background.jpg", 0, 0, width, height)
+    background_label = tk.Label(root, image=blurred_image)
+    root.blurred_image = blurred_image
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 def configure_settings_window(settings_window, root):
     settings_window.title("Settings")
@@ -59,7 +69,7 @@ def configure_settings_window(settings_window, root):
     root_y = root.winfo_y()
     root_width = root.winfo_width()
     root_height = root.winfo_height()
-    settings_width = 300
+    settings_width = 500
     settings_height = 200
     settings_x = root_x + (root_width // 2) - (settings_width // 2)
     settings_y = root_y + (root_height // 2) - (settings_height // 2)

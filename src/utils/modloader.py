@@ -2,11 +2,13 @@ import os
 import shutil
 import logging
 from src.utils.open_file import resource_path
+from src.utils import Args
+
 log = logging.getLogger(__name__)
 
 class ModManager:
     @classmethod
-    def load_mods(self, source_folder, target_folder):
+    def load_mods_from_folder(self, source_folder, target_folder):
         source_folder = resource_path(source_folder)
         target_folder = resource_path(target_folder)
         if os.path.exists(target_folder):
@@ -33,3 +35,28 @@ class ModManager:
                     log.error(f'Source file {src_file} is not a file.')
         else:
             log.error(f'Source folder {source_folder} does not exist.')
+
+    @classmethod
+    def load_mods(self, version_var):
+        modpack_folder = Args.get("modpacks_path") + "\\" + version_var
+        mods_folder = Args.get("mods_path")
+        log.info(f"Loading mods from: {modpack_folder} to {mods_folder}")
+        ModManager.load_mods_from_folder(modpack_folder, mods_folder)
+
+    @classmethod
+    def list_mods_from_folder(self, folder):
+        folder = resource_path(folder)
+        mods = []
+        if os.path.exists(folder):
+            for filename in os.listdir(folder):
+                if filename.endswith('.jar'):
+                    mods.append(filename)
+            return mods
+        else:
+            log.error(f'Folder {folder} does not exist.')
+            return []
+        
+    @classmethod
+    def list_mods(self, version_var):
+        modpack_folder = Args.get("modpacks_path") + "\\" + version_var
+        return ModManager.list_mods_from_folder(modpack_folder)
