@@ -8,7 +8,7 @@ log = logging.getLogger(__name__)
 
 class ModManager:
     @classmethod
-    def load_mods_from_folder(self, source_folder, target_folder):
+    def load_mods_from_folder(self, source_folder, target_folder, mod_list=None):
         source_folder = resource_path(source_folder)
         target_folder = resource_path(target_folder)
         if os.path.exists(target_folder):
@@ -29,6 +29,9 @@ class ModManager:
                 src_file = os.path.join(source_folder, filename)
                 dst_file = os.path.join(target_folder, filename)
                 if os.path.isfile(src_file):
+                    if mod_list is not None and filename not in mod_list:
+                        log.info(f'Skipping mod {filename} as it is not in the mod list')
+                        continue
                     log.info(f'Loaded mod {filename} to {dst_file}')
                     shutil.copy2(src_file, dst_file)
                 else:
@@ -37,11 +40,11 @@ class ModManager:
             log.error(f'Source folder {source_folder} does not exist.')
 
     @classmethod
-    def load_mods(self, version_var):
+    def load_mods(self, version_var, mod_list=None):
         modpack_folder = Args.get("modpacks_path") + "\\" + version_var
         mods_folder = Args.get("mods_path")
         log.info(f"Loading mods from: {modpack_folder} to {mods_folder}")
-        ModManager.load_mods_from_folder(modpack_folder, mods_folder)
+        ModManager.load_mods_from_folder(modpack_folder, mods_folder, mod_list)
 
     @classmethod
     def list_mods_from_folder(self, folder):

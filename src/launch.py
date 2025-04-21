@@ -16,7 +16,7 @@ def restore(delay):
     log.info("Reverting settings after delay.")
     SettingsEditor.restore()
 
-def launch_game(version_var):
+def launch_game(version_var, mod_list):
     version_var = version_var.get()
     log.info(f"Launching...")
     SettingsEditor.set_version(version_var)
@@ -24,7 +24,7 @@ def launch_game(version_var):
     SettingsEditor.modify_settings()
     log.info("Settings modified for game launch")
 
-    ModManager.load_mods(version_var)
+    ModManager.load_mods(version_var, mod_list)
 
     exe_path = Args.get("exe_path")
     subprocess.Popen(resource_path(exe_path))

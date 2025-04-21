@@ -14,9 +14,9 @@ from src.utils import TkVariables
 
 log = logging.getLogger(__name__)
 
-def start_button_process(root, version_var):
+def start_button_process(root, version_var, mod_list):
     from src.utils.consts import Args
-    launch_game(version_var)
+    launch_game(version_var, mod_list)
     if Args.get("close_on_start", 0):
         close_window(root)
 
@@ -33,13 +33,13 @@ def left_frame(root):
     buttons_frame.grid(row=0, column=0, sticky="nsew")
     make_transparent(buttons_frame)
     settings_icon = load_icon("media\\settings.png", (32, 32))
-    settings_button = ttk.Button(buttons_frame, image=settings_icon, command=lambda: open_settings(root), style="Main.TButton")
+    settings_button = ttk.Button(buttons_frame, image=settings_icon, command=lambda: open_settings(root), style="Main.TButton", takefocus=False)
     settings_button.pack(fill='x', padx=5, pady=5)
-    button2 = tk.Button(buttons_frame, text="Button 2")
-    button2.pack(fill='x', padx=5, pady=5)
+    #button2 = tk.Button(buttons_frame, text="Button 2")
+    #button2.pack(fill='x', padx=5, pady=5)
 
-    button3 = tk.Button(buttons_frame, text="Button 3")
-    button3.pack(fill='x', padx=5, pady=5)
+    #button3 = tk.Button(buttons_frame, text="Button 3")
+    #button3.pack(fill='x', padx=5, pady=5)
 
 def center_bottom_frame(root):
     center_bottom_frame = ttk.Frame(root, style="Main.TFrame")
@@ -85,11 +85,8 @@ def center_bottom_frame(root):
     start_frame = ttk.Frame(menu_frame, style="Main.TFrame")
     start_frame.grid(row=1, column=0, sticky="nsew")
 
-    start_button = tk.Button(start_frame, text="START", font=("Helvetica", 14, "bold"), command=lambda: start_button_process(root, version_var))
+    start_button = tk.Button(start_frame, text="START", font=("Helvetica", 14, "bold"), command=lambda: start_button_process(root, version_var, TkVariables.mods_listbox.get_selected_items()), takefocus=False)
     start_button.pack(side=tk.TOP, padx=(0, 0), pady=(30, 10))
-
-def on_button_click(row_index, row_text):
-    print(f"Button clicked for row {row_index}: {row_text}")
 
 def update_mods_list(version):
     mods_list = ModManager.list_mods(version)
@@ -105,7 +102,7 @@ def right_frame(root):
     mods_label = ttk.Label(mod_list_frame, text="Mods", font=("Helvetica", 14, "bold"), style="Main.TLabel")
     mods_label.pack(pady=(10, 0))
     mods_list = ModManager.list_mods(TkVariables.version_var.get())
-    mods_listbox = CustomListbox(mod_list_frame, mods_list, on_button_click)
+    mods_listbox = CustomListbox(mod_list_frame, mods_list)
     mods_listbox.pack(fill="both", padx=10, pady=10)
     TkVariables.mods_listbox = mods_listbox
 
